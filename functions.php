@@ -1,7 +1,11 @@
 <?php
 
+
+
 // Open CSV
 function readCSV($file) {
+    $line_of_text = "";
+
     $file_handle = fopen($file, 'r');
     while(!feof($file_handle)) {
         $line_of_text[] = fgetcsv($file_handle, 1024);
@@ -9,8 +13,6 @@ function readCSV($file) {
     fclose($file_handle);
     return $line_of_text;
 }
-
-$csv = readCSV($csvFile);
 
 /**
 function parseCSV($string, $separatorChar = ',', $enclosureChar = '"', $newlineChar = "\n") {
