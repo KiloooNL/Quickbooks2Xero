@@ -24,7 +24,6 @@ define("XERO_CODE", "xero_");
 #
 #   UPLOAD_DIR: the temp upload directory
 ########################################
-// Upload directory
 define("UPLOAD_DIR", "uploads/");
 
 
