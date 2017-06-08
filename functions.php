@@ -63,6 +63,14 @@ function parseCSV($string, $separatorChar = ',', $enclosureChar = '"', $newlineC
     return $array;
 }*/
 
+function checkGet($getToGet) {
+    if(isset($_GET[$getToGet])) {
+        $getToGet = $_GET[$getToGet];
+        return $getToGet;
+    }
+}
+
+
 function convertSizeToBytes($sSize)
 {
     if ( is_numeric( $sSize) ) {
