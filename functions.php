@@ -1,16 +1,19 @@
 <?php
 
-
+require_once("config.php");
+require_once("classes.php");
 
 // Open CSV
-function readCSV($file) {
+function openCSV($file) {
     $line_of_text = "";
 
     $file_handle = fopen($file, 'r');
     while(!feof($file_handle)) {
+        //$csvInArray = array_map('str_getcsv', file('data.csv'));
         $line_of_text[] = fgetcsv($file_handle, 1024);
     }
     fclose($file_handle);
+
     return $line_of_text;
 }
 
@@ -135,6 +138,34 @@ function createCSV($destinationFile) {
     // close the connection
     mysqli_close($link);
      */
+}
+
+function convertSizeToBytes($sSize)
+{
+    if ( is_numeric( $sSize) ) {
+        return $sSize;
+    }
+    $sSuffix = substr($sSize, -1);
+    $iValue = substr($sSize, 0, -1);
+    switch(strtoupper($sSuffix)){
+        case 'P':
+            $iValue *= 1024;
+        case 'T':
+            $iValue *= 1024;
+        case 'G':
+            $iValue *= 1024;
+        case 'M':
+            $iValue *= 1024;
+        case 'K':
+            $iValue *= 1024;
+            break;
+    }
+    return $iValue;
+}
+
+function getMaximumFileUploadSize()
+{
+    return min(convertSizeToBytes(ini_get('post_max_size')), convertSizeToBytes(ini_get('upload_max_filesize')));
 }
 
 ?>
