@@ -29,13 +29,26 @@ if(DEBUG_ENABLED) {
     }
 }
 
-
-$csv = readCSV("test.csv");
-echo '<pre>';
-print_r($csv);
-echo '</pre>';
-
-
 //createCSV();
+if($_GET['fileToConvert']) {
 
-?>
+    openCSV($file);
+
+    echo '<pre>';
+    print_r($csv);
+    echo '</pre>';
+} else {
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <body>
+
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        Select file to upload:
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload File" name="submit">
+    </form>
+
+    </body>
+    </html>
+    <?php } ?>
