@@ -15,6 +15,11 @@ class csv {
         fclose($file_handle);
         echo "Closing CSV...<br>";
 
+        // Return headers
+        foreach($line_of_text as $index => $value) {
+            echo $index . " => " . $value;
+        }
+
         print_r($line_of_text);
         return $line_of_text;
     }
