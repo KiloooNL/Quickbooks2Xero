@@ -10,20 +10,6 @@ $xeroFile = checkGet('xeroFile');
 // Init csv
 $csv = new csv();
 
-if(DEBUG_ENABLED) {
-    if(!isset($qbFile)) {
-        echo "No Quickbooks file specified<br>";
-    } else {
-        echo "Quickbooks file: " . $qbFile . "<br>";
-    }
-
-    if(!isset($xeroFile)) {
-        echo "No Xero file specified<br>";
-    } else {
-        echo "Xero file: " . $xeroFile . "<br>";
-    }
-}
-
 //createCSV();
 if(!checkGet('fileToConvert') == "") {
     $csv->openCSV(checkGet('fileToConvert'));
