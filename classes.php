@@ -1,17 +1,26 @@
 <?php
 
 class csv {
-    var $line_of_text = array();
 
     function openCSV($file) {
+        if(DEBUG_ENABLED) {
+            echo "Preparing CSV ($file)<br>";
+        }
         $file_handle = fopen($file, 'r');
+        echo "Opening CSV...<br>";
         while(!feof($file_handle)) {
             //$csvInArray = array_map('str_getcsv', file('data.csv'));
             $line_of_text[] = fgetcsv($file_handle, 1024);
         }
         fclose($file_handle);
+        echo "Closing CSV...<br>";
 
+        print_r($line_of_text);
         return $line_of_text;
+    }
+
+    function convertCSV($inputFile) {
+
     }
 
     // Create new CSV
