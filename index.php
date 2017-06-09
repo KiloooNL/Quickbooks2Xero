@@ -48,7 +48,7 @@ if(!checkGet('fileToConvert') == "") {
 <h1>Quickbooks2Xero</h1>
 <div class="upload">
 		<div class="login-form">
-            <form id="upload" action="upload.php" method="post" enctype="multipart/form-data">
+            <form action="upload.php" method="post" enctype="multipart/form-data">
 	            <div class="button">
 				    <h2>Select Quickbooks CSV to upload:</h2><br>
                         <div class="fileUpload btn btn-primary">
@@ -56,23 +56,21 @@ if(!checkGet('fileToConvert') == "") {
 				            <div class="browse"><input type="file" name="fileToUpload" id="fileToUpload" value="browse" class="upload"/></div>
                         </div>
 				</div>
-
-                        <div class="cancelBtn btn btn-warning">
-                            <span>Cancel</span>
-                            <div class="cancel"><a class="cancelBtn" name="cancel" href="index.php"></a></div>
-                        </div>
-
-                    <div class="submitBtn btn btn-success">
-                        <span>Convert 2 Xero</span>
-				        <div class="done"><input type="submit" name="submit" class="submitBtn"/></div>
-                    </div>
-                    <div class="clear"> </div>
+                <div class="cancelBtn btn btn-warning">
+                    <span>Cancel</span>
+                    <div class="cancel"><a class="cancelBtn" name="cancel" href="index.php"></a></div>
                 </div>
+
+                <div class="submitBtn btn btn-success">
+                    <span>Convert 2 Xero</span>
+				    <div class="done"><input type="submit" name="submit" class="submitBtn"/></div>
+                </div>
+                <div class="clear"> </div>
+            </form>
+            </div>
 				<ul>
 				<!-- The file uploads will be shown here -->
 				</ul>
-            </form>
-		</div>
 
 	<!-- JavaScript Includes -->
 		<script src="js/jquery.knob.js"></script>
@@ -87,10 +85,7 @@ if(!checkGet('fileToConvert') == "") {
 	<!-- Main JavaScript file -->
 		<script src="js/script.js"></script>
 	<!-- Main JavaScript file -->
-
-
 </div>
-
 </body>
 </html>
     <?php } ?>
