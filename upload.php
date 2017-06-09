@@ -24,8 +24,12 @@ if(isset($_POST['submit'])) {
 		}
 
 		if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'], UPLOAD_DIR.$_FILES['fileToUpload']['name'])){ ?>
-			{status:success"}<a href="index.php?fileToConvert=<?php echo UPLOAD_DIR . basename($_FILES["fileToUpload"]["name"]); ?>" />Convert to Xero</a>
-		<?php exit;
+			{status:success"} <a href="index.php?fileToConvert=<?php echo UPLOAD_DIR . basename($_FILES["fileToUpload"]["name"]); ?>" />Convert to Xero</a>
+		<?php
+		  exit;
+		}
+		if(file_exists(UPLOAD_DIR.$_FILES['fileToUpload']['tmp_name'])) {
+			echo "Sorry, the file already exists.";
 		} else {
 			echo "Sorry, there was an error uploading your file.";
 		}
