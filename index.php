@@ -13,8 +13,7 @@ $csv = new csv();
 //createCSV();
 if(!checkGet('fileToConvert') == "") {
     $csv->openCSV(checkGet('fileToConvert'));
-} else {
-    ?>
+} else { ?>
 <!DOCTYPE html>
 <head>
 <title>Quickbooks2Xero</title>
