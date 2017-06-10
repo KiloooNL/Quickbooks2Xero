@@ -8,19 +8,18 @@ class csv {
         }
         $file_handle = fopen($file, 'r');
         echo "Opening CSV...<br>";
-        while(!feof($file_handle)) {
+
+        $file_handle = fopen($file, 'r');
+        while (!feof($file_handle) ) {
             //$csvInArray = array_map('str_getcsv', file('data.csv'));
             $line_of_text[] = fgetcsv($file_handle, 1024);
         }
         fclose($file_handle);
-        echo "Closing CSV...<br>";
-
-        // Return headers
-        foreach($line_of_text as $index => $value) {
-            echo $index . " => " . $value;
+        for($i = 0; $i < count($line_of_text); $i++) {
+            print_r($line_of_text[$i]); echo "[array]<br>";
         }
 
-        print_r($line_of_text);
+        echo "Closing CSV...<br>";
         return $line_of_text;
     }
 
@@ -38,7 +37,6 @@ class csv {
         }
 
         header('Content-Disposition: attachment; filename="'.$destinationFile.'.csv"');
-
         // do not cache the file
         header('Pragma: no-cache');
         header('Expires: 0');
@@ -46,8 +44,47 @@ class csv {
         // create a file pointer connected to the output stream
         $file = fopen('php://output', 'w');
 
+
+        /** @array $xeroHeaders - This array stores the default xero csv headers */
+        $xeroHeaders = array('ContactName',
+        'EmailAddress',
+        'POAddressLine1',
+        'POAddressLine2',
+        'POAddressLine3',
+        'POAddressLine4',
+        'POCity',
+        'PORegion',
+        'POPostalCode',
+        'POCountry',
+        'InvoiceNumber',
+        'Reference',
+        'InvoiceDate',
+        'DueDate',
+        'PlannedDate',
+        'Total',
+        'TaxTotal',
+        'InvoiceAmountPaid',
+        'InvoiceAmountDue',
+        'InventoryItemCode',
+        'Description',
+        'Quantity',
+        'UnitAmount',
+        'Discount',
+        'LineAmount',
+        'AccountCode',
+        'TaxType',
+        'TaxAmount',
+        'TrackingName1',
+        'TrackingOption1',
+        'TrackingName2',
+        'TrackingOption2',
+        'Currency',
+        'Type',
+        'Sent',
+        'Status');
+        
         // send the column headers
-        fputcsv($file, array('Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5'));
+        fputcsv($file, $xeroHeaders);
 
         // Sample data. This can be fetched from mysql too
         $data = array(
@@ -56,6 +93,8 @@ class csv {
             array('Data 31', 'Data 32', 'Data 33', 'Data 34', 'Data 35'),
             array('Data 41', 'Data 42', 'Data 43', 'Data 44', 'Data 45'),
             array('Data 51', 'Data 52', 'Data 53', 'Data 54', 'Data 55')
+
+
         );
 
         // output each row of the data
