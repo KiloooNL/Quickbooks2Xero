@@ -214,29 +214,6 @@ class csv {
         echo $destinationFile;
 
         exit();
-
-        /***
-         * Or with MySQL DB
-         *
-        // Open the connection
-        $link = mysqli_connect('localhost', 'my_user', 'my_password', 'my_db');
-
-        //query the database
-        $query = 'SELECT field1, field2, field3, field4, field5 FROM table';
-
-        if ($rows = mysqli_query($link, $query))
-        {
-        // loop over the rows, outputting them
-        while ($row = mysqli_fetch_assoc($rows))
-        {
-        fputcsv($output, $row);
-        }
-        // free result set
-        mysqli_free_result($result);
-        }
-        // close the connection
-        mysqli_close($link);
-         */
     }
 }
 ?>
