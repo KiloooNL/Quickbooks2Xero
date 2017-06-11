@@ -71,8 +71,8 @@ class csv {
 
         // Show headers
         echo "Headers: ";
-        for($row = 0; $row < count($this->qbHeaders); $row++) {
-            echo $line_of_text[5][$row] . ' ';
+        for($i = 0; $i < count($this->qbHeaders); $i++) {
+            echo $line_of_text[5][$i] . ' ';
         }
         echo "<br>";
 
@@ -96,17 +96,24 @@ class csv {
                     Usually if this is the case, it is the same customer but multiple items */
                 if(array_key_exists($row, $line_of_text) && array_key_exists($col, $line_of_text[$row])) {
 
-                    // TODO: Process Full Name AS WELL as Last & First name BEFORE checking date.
+                    /** TODO:
+                     *  - Validate we are still on the same customer by checking FIRST NAME & LAST NAME = FULL NAME
+                        - If FULL NAME !== FIRST/LAST NAME, then it is either A- an item or B- a blank cell
+                        - HEADERS such as 'Phone' should be validated to see if they actually belong to this customer
+                          we could do this by checking the Phone cell is NOT NULL on the customer's first transation row.
+                          Then, if there was no phone number defined, leave it blank and repeat.
+                     */
 
-                    if($this->qbHeaders[$ind] == "Date" && $line_of_text[$row][$col] == NULL) {
-                        //echo "This transaction must belong to previous customer. Trying to find date...";
-
-                        if($this->qbHeaders[$ind] == "Date" && $line_of_text[$row - 1][$col] !== null) {
-                            echo "Transaction belongs to previous customer, using date: " . $line_of_text[$row - 1][$col];
-                            $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
-                            // TODO: Update the xero array with this date.
-
-                            // put last/first name here too....
+                    /** ---- Sort through each row to see if this row is of a previous transaction ---- */
+                    foreach($this->qbHeaders as $header) {
+                        /** If this row's column is blank, try looking at the previous row to see if there was data there */
+                        if($this->qbHeaders[$ind] == $header && $line_of_text[$row][$col] == NULL) {
+                            /** If we found some data on the previous row */
+                            if($this->qbHeaders[$ind] == $header && $line_of_text[$row - 1][$col] && $line_of_text[$row - 1][$col] !== $header) {
+                                /** Last entry was NOT blank, update current row to previous row */
+                                echo $line_of_text[$row - 1][$col];
+                                $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
+                            }
                         }
                     }
                 }
