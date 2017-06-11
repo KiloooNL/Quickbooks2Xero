@@ -71,46 +71,46 @@ class csv {
 
         // Show headers
         echo "Headers: ";
-        for($i = 0; $i < count($this->qbHeaders); $i++) {
-            echo $line_of_text[5][$i] . ' ';
+        for($row = 0; $row < count($this->qbHeaders); $row++) {
+            echo $line_of_text[5][$row] . ' ';
         }
         echo "<br>";
 
         /** Loop function
-         * @var $i - starts at 6 as Quickbooks outputs headers on row 5, data starts at row 6.
+         * @var $row - represents csv row. starts at 6 as Quickbooks outputs headers on row 5, data starts at row 6.
+         * @var $col - represents csv column. (Eg; $line_of_text[5][1] = 'name')
          *
          * @var ind - Header array index (Eg; 0 = date)
          *
-         * @var arrIndex - the multi-dimensional array index. (Eg; $line_of_text[1][1] = 'name')
          */
-        for($i = 6; $i <= count($line_of_text); $i++) {
-            $arrIndex = 1;
+        for($row = 6; $row <= count($line_of_text); $row++) {
+            $col = 1;
 
             for($ind = 0; $ind < count($this->qbHeaders); $ind++) {
-                if($line_of_text[$i][$arrIndex] !== NULL) {
-                    echo $this->qbHeaders[$ind] . ': ' . $line_of_text[$i][$arrIndex];
+                if($line_of_text[$row][$col] !== NULL) {
+                    echo $this->qbHeaders[$ind] . ': ' . $line_of_text[$row][$col];
                 }
 
                 /** Check if Quickbooks has exported this row as a transaction with multiple items
                     The way this is validated is by checking if the date does not exist on the current row,
                     Usually if this is the case, it is the same customer but multiple items */
-                if(array_key_exists($i, $line_of_text) && array_key_exists($arrIndex, $line_of_text[$i])) {
+                if(array_key_exists($row, $line_of_text) && array_key_exists($col, $line_of_text[$row])) {
 
                     // TODO: Process Full Name AS WELL as Last & First name BEFORE checking date.
 
-                    if($this->qbHeaders[$ind] == "Date" && $line_of_text[$i][$arrIndex] == NULL) {
+                    if($this->qbHeaders[$ind] == "Date" && $line_of_text[$row][$col] == NULL) {
                         //echo "This transaction must belong to previous customer. Trying to find date...";
 
-                        if($this->qbHeaders[$ind] == "Date" && $line_of_text[$i - 1][$arrIndex] !== null) {
-                            echo "Transaction belongs to previous customer, using date: " . $line_of_text[$i - 1][$arrIndex];
-                            $line_of_text[$i][$arrIndex] =  $line_of_text[$i - 1][$arrIndex];
+                        if($this->qbHeaders[$ind] == "Date" && $line_of_text[$row - 1][$col] !== null) {
+                            echo "Transaction belongs to previous customer, using date: " . $line_of_text[$row - 1][$col];
+                            $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
                             // TODO: Update the xero array with this date.
 
                             // put last/first name here too....
                         }
                     }
                 }
-                $arrIndex = $arrIndex + 2;
+                $col = $col + 2;
                 echo '<br>';
             }
 
@@ -118,55 +118,55 @@ class csv {
             /*
 
             // Date
-            echo $this->qbHeaders[0] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            echo $this->qbHeaders[0] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Receipt #
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[1] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[1] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Full Name
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[2] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[2] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Qty Sold
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[3] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[3] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Total
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[4] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[4] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // No. of Items
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[5] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[5] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Last Name
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[6] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[6] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // First Name
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[7] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[7] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Bill to Street
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[8] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[8] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Bill to City
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[9] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[9] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Bill to State
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[10] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[10] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Bill to Phone
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[11] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[11] . ': ' . $line_of_text[$row][$col]; echo '<br>';
 
             // Phone
-            $arrIndex = $arrIndex + 2;
-            echo $this->qbHeaders[12] . ': ' . $line_of_text[$i][$arrIndex]; echo '<br>';
+            $col = $col + 2;
+            echo $this->qbHeaders[12] . ': ' . $line_of_text[$row][$col]; echo '<br>';
  */
         }
 
