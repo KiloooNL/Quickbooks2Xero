@@ -57,6 +57,8 @@ class csv {
     'Status');
 
     function openCSV($file) {
+
+        $fullName = '';
         // See if file exists first...
         if(!file_exists($file)) {
             echo "File does not exist.";
@@ -115,75 +117,82 @@ class csv {
 
                         /** If this row's column is blank, try looking at the previous row to see if there was data there */
                         if($this->qbHeaders[$ind] == $header && $line_of_text[$row][$col] == NULL) {
-
-                            if($this->qbHeaders[$ind] == 'First Name' || $this->qbHeaders[$ind] == 'Last Name' && $line_of_text[$row - 1][$col] !== $header) {
-
-                            }
                             if($this->qbHeaders[$ind] == $header && $line_of_text[$row - 1][$col] !== $header) {
                                 /** Last entry was NOT blank, update current row to previous row */
-                                $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
-                                echo $line_of_text[$row][$col];
+
+                                /** if First Name . ' ' . Last Name !== full name */
+                                if($line_of_text[$row][15] . ' ' . $line_of_text[$row][13] !== $line_of_text[$row][5]) {
+                                    // todo:
+                                    // grab row <full name> and insert as 'item description' for xero
+                                    // then replace full name with actual full name
+                                    $itemDesc = $line_of_text[$row][5];
+
+                                    $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
+                                    echo $line_of_text[$row][$col];
+                                }
+
                             }
+
                         }
                     }
+
                 }
                 $col = $col + 2;
                 echo '<br>';
             }
-
             echo '<br>';
             /*
 
             // Date
-            echo $this->qbHeaders[0] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[0] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Receipt #
             $col = $col + 2;
-            echo $this->qbHeaders[1] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[1] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Full Name
             $col = $col + 2;
-            echo $this->qbHeaders[2] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[2] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Qty Sold
             $col = $col + 2;
-            echo $this->qbHeaders[3] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[3] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Total
             $col = $col + 2;
-            echo $this->qbHeaders[4] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[4] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // No. of Items
             $col = $col + 2;
-            echo $this->qbHeaders[5] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[5] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Last Name
             $col = $col + 2;
-            echo $this->qbHeaders[6] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[6] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // First Name
             $col = $col + 2;
-            echo $this->qbHeaders[7] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[7] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Bill to Street
             $col = $col + 2;
-            echo $this->qbHeaders[8] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[8] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Bill to City
             $col = $col + 2;
-            echo $this->qbHeaders[9] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[9] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Bill to State
             $col = $col + 2;
-            echo $this->qbHeaders[10] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[10] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Bill to Phone
             $col = $col + 2;
-            echo $this->qbHeaders[11] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[11] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
 
             // Phone
             $col = $col + 2;
-            echo $this->qbHeaders[12] . ': ' . $line_of_text[$row][$col]; echo '<br>';
+            echo $this->qbHeaders[12] . ': ' . $line_of_text[$row][$col]; echo ' - On Column #$col<br>';
  */
         }
 
