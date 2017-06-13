@@ -112,13 +112,17 @@ class csv {
 
                     /** ---- Sort through each row to see if this row is of a previous transaction ---- */
                     foreach($this->qbHeaders as $header) {
+
                         /** If this row's column is blank, try looking at the previous row to see if there was data there */
                         if($this->qbHeaders[$ind] == $header && $line_of_text[$row][$col] == NULL) {
+
+                            if($this->qbHeaders[$ind] == 'First Name' || $this->qbHeaders[$ind] == 'Last Name' && $line_of_text[$row - 1][$col] !== $header) {
+
+                            }
                             if($this->qbHeaders[$ind] == $header && $line_of_text[$row - 1][$col] !== $header) {
                                 /** Last entry was NOT blank, update current row to previous row */
-
-                                echo $line_of_text[$row - 1][$col];
                                 $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
+                                echo $line_of_text[$row][$col];
                             }
                         }
                     }
