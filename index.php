@@ -1,15 +1,11 @@
 <?php
-
 // Get config
 require_once("config.php");
-
 // Perform $_GET checks
 $qbFile = checkGet('qbFile');
 $xeroFile = checkGet('xeroFile');
-
 // Init csv
 $csv = new csv();
-
 //createCSV();
 if(!checkGet('fileToConvert') == "") {
     $csv->openCSV(checkGet('fileToConvert'));
@@ -53,4 +49,4 @@ if(!checkGet('fileToConvert') == "") {
 </div>
 </body>
 </html>
-    <?php } ?>
+<?php } ?>
