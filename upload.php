@@ -33,10 +33,10 @@ if(isset($_POST['submit'])) {
 			echo "Sorry, there was an error uploading your file.";
 		}
 	} else {
-	echo '{"status":"error - fileToUpload was not send during POST"}';
+	echo '{"status":"error - fileToUpload was not sent during POST"}';
 	}
 } else {
-	echo '{"status":"error - submit was not send during POST"}';
+	echo '{"status":"error - submit was not sent during POST"}';
 }
 var_dump($_POST,$_FILES);
 exit;
