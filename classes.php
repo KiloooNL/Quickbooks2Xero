@@ -130,12 +130,9 @@ class csv {
                                     $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
                                     echo $line_of_text[$row][$col];
                                 }
-
                             }
-
                         }
                     }
-
                 }
                 $col = $col + 2;
                 echo '<br>';
