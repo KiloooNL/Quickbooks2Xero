@@ -1,7 +1,6 @@
 <?php
 require_once("config.php");
 
-
 // A list of permitted file extensions
 $allowed = array('csv');
 
