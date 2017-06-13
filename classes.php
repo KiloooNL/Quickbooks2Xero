@@ -57,11 +57,17 @@ class csv {
     'Status');
 
     function openCSV($file) {
+        // See if file exists first...
+        if(!file_exists($file)) {
+            echo "File does not exist.";
+            header('Location: index.php');
+            exit;
+        }
+
         if(DEBUG_ENABLED) {
             echo "Preparing CSV ($file)<br>";
         }
 
-        // Open CSV
         $file_handle = fopen($file, 'r');
         echo "Opening CSV...<br>";
         while(!feof($file_handle)) {
@@ -108,9 +114,9 @@ class csv {
                     foreach($this->qbHeaders as $header) {
                         /** If this row's column is blank, try looking at the previous row to see if there was data there */
                         if($this->qbHeaders[$ind] == $header && $line_of_text[$row][$col] == NULL) {
-                            /** If we found some data on the previous row */
-                            if($this->qbHeaders[$ind] == $header && $line_of_text[$row - 1][$col] && $line_of_text[$row - 1][$col] !== $header) {
+                            if($this->qbHeaders[$ind] == $header && $line_of_text[$row - 1][$col] !== $header) {
                                 /** Last entry was NOT blank, update current row to previous row */
+
                                 echo $line_of_text[$row - 1][$col];
                                 $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
                             }
