@@ -45,6 +45,14 @@ define("DEBUG_ENABLED", true);
 
 $csvInArray = array();
 
+
+// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('memory_limit', '400M');
+
+ini_set('realpath_cache_size', '16k');
+ini_set('realpath_cache_ttl', '120');
+
 // Require functions.php
 require_once("functions.php");
 ?>
