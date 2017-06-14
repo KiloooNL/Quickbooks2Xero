@@ -56,20 +56,18 @@ class csv {
     'Sent',
     'Status');
 
+    var $xeroData = array();
+
     function openCSV($file) {
 
-        $fullName = '';
-        // See if file exists first...
+        /** See if file exists first */
         if(!file_exists($file)) {
             echo "File does not exist.";
             header('Location: index.php');
             exit;
         }
 
-        if(DEBUG_ENABLED) {
-            echo "Preparing CSV ($file)<br>";
-        }
-
+        echo "Preparing CSV ($file)<br>";
         $file_handle = fopen($file, 'r');
         echo "Opening CSV...<br>";
         while(!feof($file_handle)) {
@@ -127,9 +125,12 @@ class csv {
                                     // then replace full name with actual full name
                                     $itemDesc = $line_of_text[$row][5];
 
-                                    $line_of_text[$row][$col] =  $line_of_text[$row - 1][$col];
+                                    $line_of_text[$row][$col] = $line_of_text[$row - 1][$col];
                                     echo $line_of_text[$row][$col];
+                                    $line_of_text[$row][5] = $line_of_text[$row - 1][15] . ' ' . $line_of_text[$row - 1][13];
                                 }
+                                // Update xero data array
+                                $this->xeroData[] = $line_of_text[$row][$col];
                             }
                         }
                     }
@@ -193,11 +194,19 @@ class csv {
  */
         }
 
+        /** Xero Data Array importing loop should go here
+        for($i = 0; $i <= count($line_of_text); $i++) {
+            foreach($line_of_text as $line) {
+                // arr
+                foreach ($line as $row) {
+                    // row
+                    foreach($row as $col) {
+                        // col
+                    }
+                }
+            }
+        }  */
         return $line_of_text;
-    }
-
-    function convertCSV($inputFile) {
-
     }
 
     // Create new CSV
@@ -220,17 +229,8 @@ class csv {
         // send the column headers
         fputcsv($file, $this->xeroHeaders);
 
-        // Sample data. This can be fetched from mysql too
-        $data = array(
-            array('Data 11', 'Data 12', 'Data 13', 'Data 14', 'Data 15'),
-            array('Data 21', 'Data 22', 'Data 23', 'Data 24', 'Data 25'),
-            array('Data 31', 'Data 32', 'Data 33', 'Data 34', 'Data 35'),
-            array('Data 41', 'Data 42', 'Data 43', 'Data 44', 'Data 45'),
-            array('Data 51', 'Data 52', 'Data 53', 'Data 54', 'Data 55')
-        );
-
         // output each row of the data
-        foreach ($data as $row)
+        foreach ($this->xeroData as $row)
         {
             fputcsv($file, $row);
         }
